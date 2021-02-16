@@ -6,11 +6,13 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func main() {
 
 	routes := mux.NewRouter()
+	routes.Handle("/metrics", promhttp.Handler()).Methods("GET")
 	routes.HandleFunc("/foo", HelloWorld).Methods("GET")
 
 	log.Println("Application is running on: 8080 .....")
